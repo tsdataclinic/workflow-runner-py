@@ -1,0 +1,104 @@
+{
+  "version": "0.1",
+  "operations": [
+    {
+      "type": "fileTypeValidation",
+      "id": "asfasd",
+      "expectedFileType": "csv",
+      "title": "Validate file type",
+      "description": "Description for file type validation"
+    },
+    {
+      "type": "rowCountValidation",
+      "minRowCount": 1,
+      "maxRowCount": 250,
+      "id": "asfasd",
+      "title": "Validate row counts",
+      "description": "Description for row count validation"
+    },
+    {
+      "type": "fieldsetSchemaValidation",
+      "id": "asasd",
+      "fieldsetSchema": {
+        "paramId": "fieldset_schema_param_uuid"
+      },
+      "title": "Validate fieldset schema",
+      "description": "Description for fieldset schema validation"
+    }
+  ],
+  "fieldsetSchemas": [
+    {
+      "id": "demographic_fields_uuid",
+      "name": "demographic_fields",
+      "orderMatters": false,
+      "allowExtraColumns": "no",
+      "fields": [
+        {
+          "id": "1",
+          "name": "country",
+          "caseSensitive": true,
+          "required": true,
+          "allowEmptyValues": false,
+          "allowedValues": null,
+          "dataTypeValidation": {
+            "dataType": "string"
+          }
+        },
+        {
+          "id": "2",
+          "name": "capital",
+          "caseSensitive": true,
+          "required": true,
+          "allowEmptyValues": false,
+          "allowedValues": null,
+          "dataTypeValidation": {
+            "dataType": "string"
+          }
+        },
+        {
+          "id": "3",
+          "name": "population",
+          "caseSensitive": true,
+          "required": true,
+          "allowEmptyValues": false,
+          "allowedValues": null,
+          "dataTypeValidation": {
+            "dataType": "number"
+          }
+        },
+        {
+          "id": "4",
+          "name": "population_rank",
+          "caseSensitive": true,
+          "required": true,
+          "allowEmptyValues": false,
+          "allowedValues": null,
+          "dataTypeValidation": {
+            "dataType": "number"
+          }
+        },
+        {
+          "id": "5",
+          "name": "continent",
+          "caseSensitive": true,
+          "required": true,
+          "allowEmptyValues": false,
+          "allowedValues": null,
+          "dataTypeValidation": {
+            "dataType": "string"
+          }
+        }
+      ]
+    }
+  ],
+  "params": [
+    {
+      "id": "fieldset_schema_param_uuid",
+      "name": "fieldset_schema",
+      "displayName": "Fieldset Schema",
+      "description": "For testing",
+      "type": "string",
+      "required": "true"
+    }
+  ]
+}

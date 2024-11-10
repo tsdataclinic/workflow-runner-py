@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "workflow-runner-py"
+version = "0.1.0"
+description = ""
+authors = ["Brahm Capoor <brahmcapoor@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+pydantic = "^2.9.2"
+frictionless = "^5.18.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+test = "run_tests:test"
+
