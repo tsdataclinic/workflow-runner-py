@@ -1,14 +1,11 @@
-country,capital,population,population_rank,continent
-USA,Washington,,3,North America
-China,Beijing,1403500360,1,Asia
-India,New Delhi,1339180127,2,Asia
-Indonesia,Jakarta,265200000,4,Asia
-Brazil,Brasília,,5,South America
-Pakistan,Islamabad,197015955,6,Asia
-Nigeria,Abuja,190886311,7,Africa
-Bangladesh,Dhaka,,8,Asia
-Russia,Moscow,notanumber!,9,Europe
-Mexico,Mexico City,129163276,10,North America
-Japan,Tokyo,127484450,11,Asia
-
-Philippines,Manila,,12,Asia
+studentName,subject,grade
+Alice,Math,X
+Bob,Science,B
+Charlie,History,C
+David,Math,A
+Eva,Science,B
+Frank,History,A
+Grace,Math,B
+Helen,Science,C
+Ivy,History,A
+Jack,Philosophy,C

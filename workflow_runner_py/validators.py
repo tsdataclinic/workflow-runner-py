@@ -14,19 +14,13 @@ from .models.workflow_schema import (
 )
 
 
-def parse_frictionless(
-    file_contents: str | Resource,
-) -> tuple[Resource, list[ValidationFailure]]:
+def parse_frictionless(file_contents) -> tuple[Resource, list[ValidationFailure]]:
     """Validate the file using the Frictionless baseline checks and parse the file contents into a
     Frictionless Resource if not already."""
 
-    if isinstance(file_contents, str):
-        # Resource expects bytes when the first argument is the actual csv contents
-        # A string is interpreted as a filename
-        resource = Resource(file_contents.encode("utf-8"), format="csv")
-    else:
-        resource = file_contents
-
+    
+    resource = Resource(file_contents.encode("utf-8"), format="csv")
+    
     report = validate(resource, skip_errors=["missing-cell"])
     if not report.valid:
         return resource, [
@@ -176,7 +170,7 @@ def _validate_field(
         if isinstance(field.allowed_values, list):
             allowed_values = field.allowed_values
         else:
-            allowed_values = params[field.allowed_values.param_id]
+            allowed_values = params[field.allowed_values.param_name]
         if value not in allowed_values:
             validations.append(
                 ValidationFailure(

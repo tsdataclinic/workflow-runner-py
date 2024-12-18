@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from frictionless import Resource
@@ -27,26 +28,32 @@ from .validators import (
 
 WorkflowParamValue = int | str | list[str] | None
 
+def load_workflow_schema(file_name: str) -> WorkflowSchema:
+    """Load the schema of a workflow from a file."""
+    with open(file_name) as file:
+        file_contents = json.loads(file.read())
+
+    return WorkflowSchema.model_validate(file_contents)
+    
 
 def process_workflow(
     file_name: str,
-    file_contents: Resource | str,
     param_values: dict[str, WorkflowParamValue],
     schema: WorkflowSchema,
-    implicit_frictionless_validation: bool = True,
 ) -> list[ValidationFailure]:
     """Validate and execute a workflow based on the configured schema and user-provided parameters."""
 
+    with open(file_name) as file:
+        file_contents = file.read()
+
+    schema = WorkflowSchema.model_validate(schema)
+
     workflow_validation_failures: list[ValidationFailure] = []
 
-    # generally, workflows will have an implicit frictionless baseline validation
-    # but this can be turned off if we want the schema to be a completely faithful
-    # representation of the total validations that will be performed
     file_resource, frictionless_baseline_validation_failures = parse_frictionless(
         file_contents
     )
-    if implicit_frictionless_validation:
-        workflow_validation_failures.extend(frictionless_baseline_validation_failures)
+    workflow_validation_failures.extend(frictionless_baseline_validation_failures)
 
     _validate_param_values(param_values, schema)
 
@@ -105,7 +112,7 @@ def _validate_csv(
     validations = []
 
     param_schemas: dict[str, WorkflowParam] = {
-        param.id: param for param in schema.params
+        param.name: param for param in schema.params
     }
 
     for operation in schema.operations:
@@ -115,13 +122,13 @@ def _validate_csv(
                     case str():
                         fieldset_schema_name = operation.fieldset_schema
                     case ParamReference():
-                        param_id = operation.fieldset_schema.param_id
-                        param = param_schemas.get(param_id, None)
+                        param_name = operation.fieldset_schema.param_name
+                        param = param_schemas.get(param_name, None)
 
                         if not param:
                             return [
                                 ValidationFailure(
-                                    message=f"Param with id {param_id} could not be found in the param schemas."
+                                    message=f"Param with id {param_name} could not be found in the param schemas."
                                 )
                             ]
 

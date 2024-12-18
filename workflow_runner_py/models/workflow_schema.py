@@ -15,7 +15,7 @@ class CsvData(BaseModel):
 class ParamReference(BaseModel):
     """A simple object that references a param name"""
 
-    param_id: str = Field(alias="paramId")
+    param_name: str = Field(alias="paramId")
 
 
 class BaseOperation(BaseModel):
@@ -27,7 +27,6 @@ class FieldsetSchemaValidation(BaseOperation):
     """A validation operation to validate the dataset columns and their values"""
 
     type: Literal["fieldsetSchemaValidation"]
-    id: str  # uuid
     fieldset_schema: str | ParamReference = Field(alias="fieldsetSchema")
 
 
@@ -35,7 +34,6 @@ class FileTypeValidation(BaseOperation):
     """A validation operation to check file type"""
 
     type: Literal["fileTypeValidation"]
-    id: str  # uuid
     expected_file_type: str = Field(alias="expectedFileType")
 
 
@@ -43,7 +41,6 @@ class RowCountValidation(BaseOperation):
     """A validation operation to check row counts"""
 
     type: Literal["rowCountValidation"]
-    id: str  # uuid
     min_row_count: int | None = Field(alias="minRowCount")
     max_row_count: int | None = Field(alias="maxRowCount")
 
@@ -69,7 +66,6 @@ class BasicFieldDataTypeSchema(BaseModel):
 class FieldSchema(BaseModel):
     """The validation schema for a dataset column"""
 
-    id: str
     name: str
     case_sensitive: bool = Field(alias="caseSensitive")
     required: bool
@@ -85,7 +81,6 @@ class FieldsetSchema(BaseModel):
     the column schemas. E.g. the column names, order, data types, allowable values.
     """
 
-    id: str  # uuid
     name: str  # name of this fieldset, e.g. "demographic data columns"
     order_matters: bool = Field(alias="orderMatters")  # enforces column order
     fields: list[FieldSchema]
@@ -99,26 +94,21 @@ class WorkflowParam(BaseModel):
     is passed in when a Workflow is kicked off.
 
     Args:
-    - id: str - uuid, a stable id for this param that is not user-editable
     - name: str - auto-generated name from the `display_name` to be used as the variable name for this param.
     - display_name: str - user-editable display name of this param
     - description: str
     - required: bool
     """
 
-    id: str
     name: str
     display_name: str = Field(alias="displayName")
     description: str
     required: bool
-    type: Literal["string", "number", "string list"]
 
 
 class WorkflowSchema(BaseModel):
     """A schema represents the sequence of operations a Workflow should apply."""
 
-    # The schema version
-    version: Literal["0.1"]
 
     # the list of operations that this Workflow executes
     operations: list[WorkflowOperation]
